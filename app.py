@@ -47,154 +47,365 @@ print("Analizador de postura listo (confidence inicial: 0.75).")
 
 CUSTOM_CSS = """
 :root {
-  --bg-main: #121214;
-  --bg-card: #1A1B20;
-  --bg-card-soft: #202228;
-  --text-main: #F4F4F5;
-  --text-soft: #A8ACB8;
-  --accent-ok: #CCFF00;
-  --accent-warn: #FF5733;
+  --bg-deep: #0a0a0c;
+  --bg-main: #111114;
+  --bg-card: #18181d;
+  --bg-card-hover: #1e1e24;
+  --border-subtle: #26262e;
+  --border-accent: #3a3a45;
+  --text-primary: #f4f4f6;
+  --text-secondary: #9ca0ad;
+  --text-muted: #6b6f7a;
+  --accent: #c8ff00;
+  --accent-dim: rgba(200, 255, 0, 0.15);
+  --accent-glow: rgba(200, 255, 0, 0.35);
+  --danger: #ff5c4a;
+  --danger-dim: rgba(255, 92, 74, 0.15);
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-elevated: 0 2px 4px rgba(0,0,0,0.5), 0 14px 36px rgba(0,0,0,0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, .gradio-container {
+  background: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 .gradio-container {
-  background: radial-gradient(circle at 12% 20%, #23242A 0%, #121214 38%, #0F1013 100%);
-  color: var(--text-main);
+  max-width: 1280px !important;
+  padding: 28px 32px 48px !important;
+  margin: 0 auto !important;
 }
 
+/* ===== Header ===== */
 .hero-block {
-  background: linear-gradient(135deg, #1C1D23 0%, #15161A 100%);
-  border: 1px solid #2A2C34;
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 14px;
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, transparent 55%),
+              linear-gradient(135deg, #1a1b22 0%, #13141a 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 36px 40px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.hero-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 10% 0%, var(--accent-dim), transparent 70%);
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .hero-title {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 2.35rem;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  background: linear-gradient(180deg, #ffffff 0%, #d6d9e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-
 .hero-subtitle {
-  margin: 8px 0 0;
-  color: var(--text-soft);
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 640px;
+}
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 7px 14px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 255, 0, 0.25);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
+/* ===== Layout panels ===== */
 .panel-card {
   background: var(--bg-card);
-  border: 1px solid #2A2C34;
-  border-radius: 12px;
-  padding: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.panel-card:hover {
+  border-color: var(--border-accent);
 }
 
 .panel-card .wrap,
 .panel-card .block {
-  border-radius: 12px !important;
+  border-radius: var(--radius) !important;
+  background: transparent !important;
 }
 
-.cta-btn button {
-  background: linear-gradient(90deg, #CCFF00 0%, #A3E635 100%) !important;
-  color: #111214 !important;
-  border: none !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.01em !important;
+/* ===== Settings gear ===== */
+.gear-hint {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
 }
 
-.cta-btn button:hover {
-  filter: brightness(1.06);
+.settings-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
 }
-
-.coach-wrap {
-  background: var(--bg-card-soft);
-  border: 1px solid #2F323B;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.coach-badge {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 0.88rem;
-  font-weight: 700;
+.settings-panel .label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   margin-bottom: 12px;
 }
 
+/* ===== Inputs ===== */
+.gr-button-primary, button.primary {
+  background: linear-gradient(135deg, #c8ff00 0%, #a8e000 100%) !important;
+  color: #0a0a0c !important;
+  border: none !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  border-radius: var(--radius) !important;
+  padding: 14px 28px !important;
+  font-size: 1rem !important;
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  transition: all 0.2s ease;
+}
+.gr-button-primary:hover, button.primary:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 8px transparent, 0 4px 18px rgba(200, 255, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.gr-image, .image-container {
+  border-radius: var(--radius) !important;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle) !important;
+  background: var(--bg-card) !important;
+}
+
+/* ===== CTA ===== */
+.cta-primary {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.cta-primary button {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* ===== Coach feedback ===== */
+.coach-wrap {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 40%),
+              var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.coach-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
 .coach-badge.ok {
-  background: rgba(204, 255, 0, 0.17);
-  color: var(--accent-ok);
-  border: 1px solid rgba(204, 255, 0, 0.45);
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(200, 255, 0, 0.3);
 }
-
 .coach-badge.warn {
-  background: rgba(255, 87, 51, 0.14);
-  color: #FF7A59;
-  border: 1px solid rgba(255, 87, 51, 0.45);
+  background: var(--danger-dim);
+  color: #ff8a7a;
+  border: 1px solid rgba(255, 92, 74, 0.3);
 }
 
+/* ===== Metric cards ===== */
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
+  margin-top: 4px;
 }
 
 .metric-card {
-  background: #17181D;
-  border: 1px solid #2A2C34;
-  border-radius: 12px;
-  padding: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 55%),
+              #111119;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.metric-card:hover {
+  border-color: var(--border-accent);
 }
 
 .metric-title {
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-soft);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
-
 .metric-value {
-  margin: 6px 0;
-  font-size: 1rem;
-  font-weight: 700;
+  margin: 8px 0 6px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.metric-advice {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
 }
 
-.metric-advice {
-  margin: 6px 0 0;
-  font-size: 0.8rem;
-  color: #D1D5E0;
+.metric-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .progress-track {
-  width: 100%;
-  height: 8px;
+  flex: 1;
+  height: 6px;
   border-radius: 999px;
-  background: #2A2C34;
+  background: var(--border-subtle);
   overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.35);
 }
-
 .progress-fill {
   height: 100%;
   border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
 .progress-fill.ok {
-  background: linear-gradient(90deg, #A3E635 0%, #CCFF00 100%);
+  background: linear-gradient(90deg, #a8e000, #c8ff00);
+  box-shadow: 0 0 10px var(--accent-glow);
 }
-
 .progress-fill.warn {
-  background: linear-gradient(90deg, #FF7A59 0%, #FF5733 100%);
+  background: linear-gradient(90deg, #ff8a7a, #ff5c4a);
+  box-shadow: 0 0 10px rgba(255, 92, 74, 0.25);
 }
 
-.gear-hint {
+.score-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 32px;
   text-align: right;
-  color: #C7CAD4;
-  font-size: 0.88rem;
-  margin: 0 0 6px;
+  color: var(--text-secondary);
+}
+
+.metric-note {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===== Buttons global ===== */
+.gr-button {
+  border-radius: var(--radius) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease;
+}
+
+.gr-button-secondary {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-accent) !important;
+  color: var(--text-primary) !important;
+}
+.gr-button-secondary:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: #555 !important;
+}
+
+/* ===== Accordion ===== */
+.gr-accordion {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius) !important;
+}
+.gr-accordion .label {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+}
+
+/* ===== Slider / Radio ===== */
+.gr-slider, .gr-radio {
+  color: var(--text-primary) !important;
+}
+input[type="range"] {
+  accent-color: var(--accent) !important;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a48;
 }
 
 @media (max-width: 900px) {
+  .gradio-container {
+    padding: 16px !important;
+  }
+  .hero-title {
+    font-size: 1.75rem;
+  }
   .metric-grid {
     grid-template-columns: 1fr;
+  }
+  .hero-block {
+    padding: 24px 22px;
   }
 }
 """
@@ -211,13 +422,16 @@ def _build_metric_card(title, value, advice, score):
     score = max(0, min(100, int(score)))
     status = _metric_status(score)
     return f"""
-    <article class=\"metric-card\">
-      <p class=\"metric-title\">{safe_title}</p>
-      <p class=\"metric-value\">{safe_value}</p>
-      <div class=\"progress-track\">
-        <div class=\"progress-fill {status}\" style=\"width:{score}%\"></div>
+    <article class="metric-card">
+      <p class="metric-title">{safe_title}</p>
+      <p class="metric-value">{safe_value}</p>
+      <div class="metric-score">
+        <div class="progress-track">
+          <div class="progress-fill {status}" style="width:{score}%"></div>
+        </div>
+        <span class="score-label">{score}%</span>
       </div>
-      <p class=\"metric-advice\">{safe_advice}</p>
+      <p class="metric-advice">{safe_advice}</p>
     </article>
     """
 
@@ -230,7 +444,6 @@ def _score_in_range(value, min_ok, max_ok):
 
 
 def _validation_policy(confidence_threshold, validation_mode):
-  # Umbral adaptativo: a mayor confidence, mayor exigencia de visibilidad.
   conf = float(confidence_threshold)
   vis_min = 0.35 + ((conf - 0.50) / 0.45) * 0.25
   vis_min = max(0.35, min(0.60, vis_min))
@@ -252,12 +465,23 @@ def _validation_policy(confidence_threshold, validation_mode):
   }
 
 
+def _prepare_image_for_mediapipe(imagen_entrada):
+    if imagen_entrada is None:
+        return None
+    img = np.array(imagen_entrada)
+    if img.ndim == 3 and img.shape[2] == 4:
+        img = img[:, :, :3]
+    if img.dtype != np.uint8:
+        img = np.clip(img, 0, 255).astype(np.uint8)
+    return img
+
+
 def dibujar_esqueleto(imagen_rgb, detection_result):
     pose_landmarks_list = detection_result.pose_landmarks
     annotated_image = np.copy(imagen_rgb)
 
     point_style = drawing_utils.DrawingSpec(color=(245, 245, 245), thickness=1, circle_radius=1)
-    line_style = drawing_utils.DrawingSpec(color=(204, 255, 0), thickness=1)
+    line_style = drawing_utils.DrawingSpec(color=(200, 255, 0), thickness=2)
 
     for pose_landmarks in pose_landmarks_list:
         drawing_utils.draw_landmarks(
@@ -274,16 +498,20 @@ def dibujar_esqueleto(imagen_rgb, detection_result):
 def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mode):
   try:
     detector = get_detector(confidence_threshold)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=imagen_entrada)
+    imagen_prep = _prepare_image_for_mediapipe(imagen_entrada)
+    if imagen_prep is None:
+      raise ValueError("No se recibio imagen de entrada.")
+
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=imagen_prep)
     detection_result = detector.detect(mp_image)
-    imagen_anotada = dibujar_esqueleto(imagen_entrada, detection_result)
+    imagen_anotada = dibujar_esqueleto(imagen_prep, detection_result)
 
     if not detection_result.pose_landmarks or len(detection_result.pose_landmarks) == 0:
-      banner = "⚠️ Correccion sugerida: Reencuadra tu postura para iniciar el escaneo"
+      banner = "Reencuadra tu postura para iniciar el escaneo"
       resumen = f"""
-      <section class=\"coach-wrap\">
-        <span class=\"coach-badge warn\">{html.escape(banner)}</span>
-        <p class=\"metric-advice\">Ubicate de cuerpo completo, con buena luz y fondo limpio.</p>
+      <section class="coach-wrap">
+        <span class="coach-badge warn">{html.escape(banner)}</span>
+        <p class="metric-advice">Ubicate de cuerpo completo, con buena luz y fondo limpio.</p>
       </section>
       """
       return imagen_anotada, resumen, f"No se detectaron landmarks. confidence={confidence_threshold:.2f}"
@@ -310,11 +538,11 @@ def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mo
     trunk_ok = all(vis[p] >= policy["trunk_min"] for p in trunk_points)
 
     if valid_count < policy["coverage_min"] or not trunk_ok:
-      banner = "⚠️ Correccion sugerida: Mejora visibilidad antes de analizar"
+      banner = "Mejora la visibilidad antes de analizar"
       resumen = f"""
-      <section class=\"coach-wrap\">
-        <span class=\"coach-badge warn\">{html.escape(banner)}</span>
-        <p class=\"metric-advice\">La camara no ve bien suficientes articulaciones para una evaluacion fiable.</p>
+      <section class="coach-wrap">
+        <span class="coach-badge warn">{html.escape(banner)}</span>
+        <p class="metric-advice">La camara no ve bien suficientes articulaciones para una evaluacion fiable.</p>
       </section>
       """
       return imagen_anotada, resumen, (
@@ -383,23 +611,23 @@ def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mo
     min_score = min(score_hombros, score_torso, score_pelvis, score_rodillas)
     if min_score >= 85 and not alerta_plano:
       badge_class = "ok"
-      badge_text = "✅ Tecnica solida: postura lista para rendir"
+      badge_text = "Tecnica solida: postura lista para rendir"
     else:
       badge_class = "warn"
       if score_torso < 70:
-        badge_text = "⚠️ Correccion sugerida: Alineacion de Espalda"
+        badge_text = "Correccion sugerida: Alineacion de Espalda"
       elif score_pelvis < 70:
-        badge_text = "⚠️ Correccion sugerida: Estabiliza la pelvis"
+        badge_text = "Correccion sugerida: Estabiliza la pelvis"
       elif score_rodillas < 70:
-        badge_text = "⚠️ Correccion sugerida: Control de rodillas"
+        badge_text = "Correccion sugerida: Control de rodillas"
       else:
-        badge_text = "⚠️ Correccion sugerida: Ajuste tecnico general"
+        badge_text = "Correccion sugerida: Ajuste tecnico general"
 
-    plano_note = "<p class='metric-advice'>Plano de camara no ideal: prioriza una toma lateral o frontal limpia.</p>" if alerta_plano else ""
+    plano_note = "<p class='metric-note'>Plano de camara no ideal: prioriza una toma lateral o frontal limpia.</p>" if alerta_plano else ""
     resumen = f"""
-    <section class=\"coach-wrap\">
-      <span class=\"coach-badge {badge_class}\">{html.escape(badge_text)}</span>
-      <div class=\"metric-grid\">{cards}</div>
+    <section class="coach-wrap">
+      <span class="coach-badge {badge_class}">{html.escape(badge_text)}</span>
+      <div class="metric-grid">{cards}</div>
       {plano_note}
     </section>
     """
@@ -425,10 +653,16 @@ def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mo
   except Exception as e:
     error_summary = (
       "<section class='coach-wrap'><span class='coach-badge warn'>"
-      "⚠️ Correccion sugerida: Error en el escaneo"
+      "Error en el escaneo"
       "</span><p class='metric-advice'>Reintenta con otra imagen.</p></section>"
     )
-    return imagen_entrada.copy(), error_summary, f"Error al procesar: {str(e)}"
+    if imagen_entrada is not None:
+        fallback = np.array(imagen_entrada)
+        if fallback.ndim == 3 and fallback.shape[2] == 4:
+            fallback = fallback[:, :, :3]
+    else:
+        fallback = np.zeros((480, 640, 3), dtype=np.uint8)
+    return fallback, error_summary, f"Error al procesar: {str(e)}"
 
 
 with gr.Blocks(title="Analizador de Postura Premium") as app_fitness:
@@ -437,56 +671,74 @@ with gr.Blocks(title="Analizador de Postura Premium") as app_fitness:
         <section class='hero-block'>
           <h1 class='hero-title'>Analizador de Postura para Entrenamiento</h1>
           <p class='hero-subtitle'>Feedback visual estilo coach para mejorar tecnica, estabilidad y rendimiento.</p>
+          <div class='hero-pill'>
+            <span>&#9679;</span>
+            <span>MediaPipe Pose &middot; Heavy Model</span>
+          </div>
         </section>
         """
     )
 
     with gr.Row():
-        with gr.Column(scale=4):
-            pass
-        with gr.Column(scale=2):
-            gr.HTML("<p class='gear-hint'>⚙ Ajustes</p>")
-            with gr.Accordion("Panel de configuracion", open=False):
+        with gr.Column(scale=1):
+            gr.HTML("<p class='gear-hint'>Configuracion</p>")
+            with gr.Column(elem_classes=["settings-panel"]):
                 confidence_slider = gr.Slider(
                     minimum=0.50,
                     maximum=0.95,
                     value=0.75,
                     step=0.05,
-                    label="Confidence de deteccion",
+                    label="Confianza de deteccion",
                     info="Sube para mayor rigor. Baja para detectar mejor en fotos complejas.",
                 )
                 validation_mode = gr.Radio(
-                    choices=["Flexible", "Estricto"],
-                    value="Flexible",
+                    choices=["flexible", "estricto"],
+                    value="flexible",
                     label="Modo de validacion",
                     info="Flexible reduce falsos rechazos. Estricto aumenta control tecnico.",
                 )
-                gr.Markdown("Precisión de escaneo: regulable ⚙")
-                gr.Markdown("Modo: Analisis estatico para entrenamiento en gym")
-                gr.Markdown("Detalle tecnico disponible en Ver datos avanzados")
+                gr.Markdown("---")
+                gr.Markdown("**Detalles tecnicos**")
+                gr.Markdown("- Analisis estatico para entrenamiento en gym")
+                gr.Markdown("- Modelo: pose_landmarker_heavy.task")
+                gr.Markdown("- Las metricas se calculan en tiempo real")
 
     with gr.Row():
-        with gr.Column(elem_classes=["panel-card"]):
+        with gr.Column(scale=5):
             entrada_imagen = gr.Image(
                 label="Foto de postura",
                 type="numpy",
                 sources=["upload", "webcam"],
+                height=420,
             )
-            boton_analizar = gr.Button(
-                "Analizar Postura",
-                elem_classes=["cta-btn"],
-                size="lg",
-            )
+            with gr.Row():
+                gr.ClearButton(value="Limpiar", components=[entrada_imagen])
+                boton_analizar = gr.Button(
+                    "Analizar postura",
+                    variant="primary",
+                    scale=2,
+                    size="lg",
+                )
 
-        with gr.Column(elem_classes=["panel-card"]):
-            salida_imagen = gr.Image(label="Esqueleto detectado")
-            salida_resumen = gr.HTML(label="Feedback del coach")
-            with gr.Accordion("Ver datos avanzados", open=False):
-                salida_avanzado = gr.Textbox(label="Datos avanzados", lines=8, interactive=False)
+        with gr.Column(scale=7):
+            salida_imagen = gr.Image(
+                label="Esqueleto detectado",
+                height=420,
+                interactive=False,
+            )
+            with gr.Accordion("Feedback del coach", open=True):
+                salida_resumen = gr.HTML()
+            with gr.Accordion("Datos avanzados", open=False):
+                salida_avanzado = gr.Textbox(
+                    label="Metricas avanzadas",
+                    lines=8,
+                    interactive=False,
+                    show_copy_button=True,
+                )
 
     boton_analizar.click(
         fn=analizar_postura_fitness,
-      inputs=[entrada_imagen, confidence_slider, validation_mode],
+        inputs=[entrada_imagen, confidence_slider, validation_mode],
         outputs=[salida_imagen, salida_resumen, salida_avanzado],
     )
 
