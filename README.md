@@ -94,4 +94,4 @@ git push
 
 ## Créditos
 
-Proyecto desarrollado por **Manuel Velásquez** como parte de la asignatura *Visión Artificial Aplicada* (PDI).
+Proyecto desarrollado por **Christian Manuel Patricio Velásquez** como parte de la asignatura *Visión Artificial Aplicada* (PDI).
