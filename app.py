@@ -733,7 +733,6 @@ with gr.Blocks(title="Analizador de Postura Premium") as app_fitness:
                     label="Metricas avanzadas",
                     lines=8,
                     interactive=False,
-                    show_copy_button=True,
                 )
 
     boton_analizar.click(
