@@ -1,3 +1,14 @@
+---
+title: Analizador de Postura para Entrenamiento
+emoji: 🏋️
+colorFrom: gray
+colorTo: indigo
+sdk: gradio
+python_version: "3.11"
+app_file: app.py
+pinned: false
+---
+
 # 🏋️ Analizador de Postura para Entrenamiento
 
 Aplicación Gradio que utiliza **MediaPipe Pose Heavy** para detectar, analizar y evaluar la postura corporal en tiempo real a partir de una imagen o foto. Diseñada como proyecto de aplicación de visión artificial.
