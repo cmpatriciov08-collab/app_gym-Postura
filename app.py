@@ -93,8 +93,8 @@ html, body, .gradio-container {
               linear-gradient(135deg, #1a1b22 0%, #13141a 100%);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
-  padding: 36px 40px;
-  margin-bottom: 24px;
+  padding: 24px 32px;
+  margin-bottom: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
 }
@@ -109,7 +109,7 @@ html, body, .gradio-container {
 
 .hero-title {
   margin: 0;
-  font-size: 2.35rem;
+  font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -236,9 +236,9 @@ html, body, .gradio-container {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 700;
   margin-bottom: 14px;
   letter-spacing: 0.01em;
@@ -285,7 +285,7 @@ html, body, .gradio-container {
 }
 .metric-value {
   margin: 8px 0 6px;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--text-primary);
@@ -394,19 +394,154 @@ input[type="range"] {
   background: #3a3a48;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 860px) {
   .gradio-container {
     padding: 16px !important;
   }
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
   .metric-grid {
     grid-template-columns: 1fr;
   }
-  .hero-block {
-    padding: 24px 22px;
-  }
+}
+
+/* ===== Suggestions ===== */
+.suggestions-wrap {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 40%),
+              var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  margin-top: 16px;
+}
+
+.suggestions-title {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.suggestion-item.critico {
+  background: rgba(255, 92, 74, 0.08);
+  border-color: rgba(255, 92, 74, 0.22);
+  color: #ffcdc6;
+}
+
+.suggestion-item.recomendado {
+  background: rgba(255, 170, 60, 0.08);
+  border-color: rgba(255, 170, 60, 0.22);
+  color: #ffd9a6;
+}
+
+.suggestion-item.ok {
+  background: rgba(200, 255, 0, 0.06);
+  border-color: rgba(200, 255, 0, 0.18);
+  color: #d4eebb;
+}
+
+.suggestion-item.info {
+  background: rgba(120, 160, 255, 0.08);
+  border-color: rgba(120, 160, 255, 0.22);
+  color: #c6d9ff;
+}
+
+.suggestion-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.suggestion-text {
+  flex: 1;
+}
+
+/* ===== Layout optimized ===== */
+.settings-compact {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius) !important;
+  padding: 14px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.panel-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+/* ===== Empty state ===== */
+.empty-state {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, transparent 40%), var(--bg-card);
+  border: 1px dashed var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.empty-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+.empty-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.empty-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  max-width: 280px;
+}
+.empty-tips {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.empty-tips li::before {
+  content: "— ";
+  color: var(--accent);
 }
 """
 
@@ -436,6 +571,77 @@ def _build_metric_card(title, value, advice, score):
     """
 
 
+def _generar_sugerencias_postura(distancia_hombros, desnivel_cadera, desequilibrio_rodillas, torso_inclinacion, alerta_plano, score_hombros, score_pelvis, score_rodillas, score_torso):
+    sugerencias = []
+    
+    # === Alineacion de espalda ===
+    if score_torso < 50:
+        sugerencias.append(("critico", f"Corrección urgente: la inclinación del tronco ({torso_inclinacion:.1f}°) supera los límites seguros. Activa el core, retrae los escápulos y alinea el esternón con la pelvis antes de cada repetición."))
+    elif score_torso < 70:
+        sugerencias.append(("recomendado", f"Ajusta la alineación del tronco ({torso_inclinacion:.1f}°). Abre el pecho, retrae los escápulos y piensa en 'crecer' desde la coronilla para mantener la columna en posición neutral."))
+    elif score_torso >= 85:
+        sugerencias.append(("ok", "Alineación del tronco impecable: la columna se mantiene en posición neutral, reduciendo el riesgo de lesión y maximizando la transferencia de fuerza."))
+    
+    # === Balance de pelvis ===
+    if score_pelvis < 50:
+        sugerencias.append(("critico", f"Estabilización pélvica requerida (desnivel: {desnivel_cadera:.3f}). La pelvis presenta rotación. Coloca ambos pies al ancho de las caderas y nivela las crestas ilíacas antes de ejecutar el gesto."))
+    elif score_pelvis < 70:
+        sugerencias.append(("recomendado", f"Mejora el balance pélvico (desnivel: {desnivel_cadera:.3f}). Distribuye el peso equitativamente entre ambos apoyos y evita cargar más sobre un solo lado."))
+    elif score_pelvis >= 85:
+        sugerencias.append(("ok", "Balance pélvico sobresaliente: la pelvis estable actúa como el nexo firme entre el torso y las piernas."))
+    
+    # === Simetria de rodillas ===
+    if score_rodillas < 50:
+        sugerencias.append(("critico", f"Alineación de rodillas comprometida (desbalance: {desequilibrio_rodillas:.3f}). Asegura que ambas rodillas sigan la misma línea en flexión/extensión. Revisa si un pie está más adelantado o más abierto que el otro."))
+    elif score_rodillas < 70:
+        sugerencias.append(("recomendado", f"Controla la simetría de rodillas (diferencia: {desequilibrio_rodillas:.3f}). Mantén las rodillas alineadas con la punta de los pies y evita que una quede más alta o más baja que la otra."))
+    elif score_rodillas >= 85:
+        sugerencias.append(("ok", "Simetría de rodillas perfecta: el trabajo se distribuye equitativamente, protegiendo las articulaciones y maximizando la potencia del gesto."))
+    
+    # === Apertura de hombros ===
+    if score_hombros < 50:
+        sugerencias.append(("critico", f"Base de sustentación insuficiente (apertura: {distancia_hombros:.3f}). Separa los pies al ancho aproximado de los hombros para ganar estabilidad y evitar balanceos laterales."))
+    elif score_hombros < 70:
+        sugerencias.append(("recomendado", f"Ajusta la apertura de hombros (rango: {distancia_hombros:.3f}). Verifica que la separación te permita mantener el torso alineado sin compensaciones."))
+    elif score_hombros >= 85:
+        sugerencias.append(("ok", "Buena apertura de hombros: proporciona una base sólida y estable para la ejecución del gesto."))
+    
+    # === Recomendaciones combinadas ===
+    if score_torso < 70 and score_pelvis < 70:
+        sugerencias.append(("recomendado", "Tronco y pelvis desalineados: prioriza ejercicios de core como plancha isométrica, dead-bug o puente de glúteos para ganar estabilidad central."))
+    
+    if score_rodillas < 70 and score_pelvis < 70:
+        sugerencias.append(("recomendado", "Descompensación en tren inferior: revisa la alineación pie-rodilla-cadera frente al espejo. Practica sentadillas sin peso para automatizar la postura."))
+    
+    if score_torso >= 85 and score_pelvis >= 85 and score_rodillas >= 85 and score_hombros >= 85:
+        sugerencias.append(("ok", "Técnica sólida: postura lista para rendir. Puedes aumentar la intensidad con control y confianza."))
+    
+    if alerta_plano:
+        sugerencias.insert(0, ("info", "La toma de cámara no es ideal para una evaluación precisa. Prioriza una foto lateral o frontal limpia, sin obstáculos y con buena iluminación."))
+    
+    return sugerencias
+
+
+def _render_sugerencias_html(sugerencias):
+    if not sugerencias:
+        return ""
+    
+    iconos = {"critico": "!", "recomendado": "*", "ok": "+", "info": "i"}
+    
+    items_html = "".join([
+        f"""<li class="suggestion-item {tipo}">
+          <span class="suggestion-icon">{iconos.get(tipo, '-')}</span>
+          <span class="suggestion-text">{html.escape(texto)}</span>
+        </li>"""
+        for tipo, texto in sugerencias
+    ])
+    
+    return f"""<section class="suggestions-wrap">
+      <h3 class="suggestions-title">Recomendaciones personalizadas</h3>
+      <ul class="suggestions-list">{items_html}</ul>
+    </section>"""
+
+
 def _score_in_range(value, min_ok, max_ok):
     if min_ok <= value <= max_ok:
         return 100
@@ -463,6 +669,21 @@ def _validation_policy(confidence_threshold, validation_mode):
     "trunk_min": max(0.30, vis_min - 0.08),
     "mode": "Flexible",
   }
+
+
+def _empty_state_html():
+    return """
+    <section class="empty-state">
+      <div class="empty-icon">&#128247;</div>
+      <p class="empty-title">Sin análisis aún</p>
+      <p class="empty-desc">Subí una foto o usá la cámara para evaluar tu postura.</p>
+      <ul class="empty-tips">
+        <li>Foto de cuerpo completo, de frente o lateral.</li>
+        <li>Buena iluminación y fondo limpio.</li>
+        <li>Ropa cómoda que permita ver las articulaciones.</li>
+      </ul>
+    </section>
+    """
 
 
 def _prepare_image_for_mediapipe(imagen_entrada):
@@ -608,6 +829,13 @@ def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mo
       ),
     ])
 
+    # Generar sugerencias personalizadas
+    sugerencias = _generar_sugerencias_postura(
+        distancia_hombros, desnivel_cadera, desequilibrio_rodillas, torso_inclinacion,
+        alerta_plano, score_hombros, score_pelvis, score_rodillas, score_torso
+    )
+    sugerencias_html = _render_sugerencias_html(sugerencias)
+
     min_score = min(score_hombros, score_torso, score_pelvis, score_rodillas)
     if min_score >= 85 and not alerta_plano:
       badge_class = "ok"
@@ -628,6 +856,7 @@ def analizar_postura_fitness(imagen_entrada, confidence_threshold, validation_mo
     <section class="coach-wrap">
       <span class="coach-badge {badge_class}">{html.escape(badge_text)}</span>
       <div class="metric-grid">{cards}</div>
+      {sugerencias_html}
       {plano_note}
     </section>
     """
@@ -680,60 +909,26 @@ with gr.Blocks(title="Analizador de Postura Premium") as app_fitness:
     )
 
     with gr.Row():
-        with gr.Column(scale=1):
-            gr.HTML("<p class='gear-hint'>Configuracion</p>")
-            with gr.Column(elem_classes=["settings-panel"]):
-                confidence_slider = gr.Slider(
-                    minimum=0.50,
-                    maximum=0.95,
-                    value=0.75,
-                    step=0.05,
-                    label="Confianza de deteccion",
-                    info="Sube para mayor rigor. Baja para detectar mejor en fotos complejas.",
-                )
-                validation_mode = gr.Radio(
-                    choices=["flexible", "estricto"],
-                    value="flexible",
-                    label="Modo de validacion",
-                    info="Flexible reduce falsos rechazos. Estricto aumenta control tecnico.",
-                )
-                gr.Markdown("---")
-                gr.Markdown("**Detalles tecnicos**")
-                gr.Markdown("- Analisis estatico para entrenamiento en gym")
-                gr.Markdown("- Modelo: pose_landmarker_heavy.task")
-                gr.Markdown("- Las metricas se calculan en tiempo real")
-
-    with gr.Row():
-        with gr.Column(scale=5):
-            entrada_imagen = gr.Image(
-                label="Foto de postura",
-                type="numpy",
-                sources=["upload", "webcam"],
-                height=420,
-            )
+        with gr.Column(scale=4):
+            gr.HTML("<p class='panel-label'>Configuración</p>")
+            with gr.Column(elem_classes=["settings-compact"]):
+                confidence_slider = gr.Slider(minimum=0.50, maximum=0.95, value=0.75, step=0.05, label="Confianza de detección")
+                validation_mode = gr.Radio(choices=["flexible", "estricto"], value="flexible", label="Modo de validación")
+            
+            gr.Markdown("---") 
+            
+            entrada_imagen = gr.Image(label="Foto de postura", type="numpy", sources=["upload", "webcam"], height=360)
             with gr.Row():
                 gr.ClearButton(value="Limpiar", components=[entrada_imagen])
-                boton_analizar = gr.Button(
-                    "Analizar postura",
-                    variant="primary",
-                    scale=2,
-                    size="lg",
-                )
+                boton_analizar = gr.Button("Analizar postura", variant="primary", scale=3, size="lg")
+            
+            salida_imagen = gr.Image(label="Esqueleto detectado", height=360, interactive=False)
 
-        with gr.Column(scale=7):
-            salida_imagen = gr.Image(
-                label="Esqueleto detectado",
-                height=420,
-                interactive=False,
-            )
-            with gr.Accordion("Feedback del coach", open=True):
-                salida_resumen = gr.HTML()
+        with gr.Column(scale=8):
+            salida_resumen = gr.HTML(value=_empty_state_html())
+            
             with gr.Accordion("Datos avanzados", open=False):
-                salida_avanzado = gr.Textbox(
-                    label="Metricas avanzadas",
-                    lines=8,
-                    interactive=False,
-                )
+                salida_avanzado = gr.Textbox(label="Metricas avanzadas", lines=8, interactive=False)
 
     boton_analizar.click(
         fn=analizar_postura_fitness,
